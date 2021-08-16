@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to a room booking web application
+  // how to refrence the title if needed -> #{title}
+  div(class='topnav')
+    a(class='active', href='#home') Home
+    a(href='#rooms') Rooms
+    a(href='#login') Login
+    a(href='#contact') Contact
+    a(href='#booking') Booking
+
+    input(type="text" placeholder="Search rooms...")
+  
+    
