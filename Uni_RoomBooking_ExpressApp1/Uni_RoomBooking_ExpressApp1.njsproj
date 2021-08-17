@@ -30,10 +30,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app.js" />
-    <Content Include="Dao\Connection\mysql_connection_string.js">
+    <Content Include="Dao\mysql_connection_string.js">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Dao\Connection\mysql_connection.js">
+    <Content Include="Dao\mysql_connection.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="Dao\room_Dao.js">
@@ -49,6 +49,9 @@
     <Content Include="views\layout.pug" />
     <Content Include="views\error.pug" />
     <Content Include="views\login.pug" />
+    <Content Include="views\room_List.pug">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dao\" />

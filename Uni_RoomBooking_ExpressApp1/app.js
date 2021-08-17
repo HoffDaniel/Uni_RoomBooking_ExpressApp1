@@ -9,8 +9,29 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+//var mysql = require('mysql');
 
 var app = express();
+
+
+////create connection
+//const db = mysql.createConnection({
+//    host: 'localhost',
+//    user: 'root',
+//    password: 'root1234',
+//    database: 'db_test'
+
+//});
+
+////Connect to MySQL
+//db.connect(function (err) {
+//    if (err) {
+//        throw err;
+//    }
+//    console.log('MySQL connected');
+//});
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -57,6 +78,10 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
+
+
+
+
 
 app.set('port', process.env.PORT || 3000);
 
