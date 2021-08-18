@@ -10,7 +10,9 @@ block content
     a(href='/login') Login
     a(href='#contact') Contact
     a(href='#booking') Booking
-
-    input(type="text" placeholder="Search rooms...")
-  
+    div(class='search-container')
+        form(action='/search_Results.pug')
+            input(type="text" placeholder="Search rooms...", name='search')
+            button(type="submit")
+                i.fa.fa-search
     

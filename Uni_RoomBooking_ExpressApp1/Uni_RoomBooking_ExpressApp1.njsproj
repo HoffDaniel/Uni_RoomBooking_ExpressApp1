@@ -52,6 +52,9 @@
     <Content Include="views\room_List.pug">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="views\search_Results.pug">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dao\" />

@@ -17,15 +17,29 @@ router.get('/login', function (req, res) {
     res.render('login', { title: 'Login' });
 });
 
-/* GET a list of rooms . */
-router.get('/room_List', function (_req, res) {
+/* GET a list of all rooms */
+router.get('/room_List', function (req, res) {
 
-    
+    room_Dao.room_Dao.get_Rooms_All(
+        function (rooms) {
+            console.log(rooms);
+            //"render" res(ponse) in 'room_List'
+            res.render('room_List', { rooms: rooms });
+        }
+    );
 
-    room_Dao.room_Dao.get_Rooms_All(function (rooms) {
+});
 
-        console.log(rooms);
-        res.render('room_List', {rooms: rooms});
+/* GET a list of all rooms but put it in search_Results*/
+router.post('/search_Results', function (req, res) {
+    let srch = req.body;
+
+    room_Dao.room_Dao.get_Rooms_Where(
+        srch,
+        function (rooms) {
+            
+        //"render" res(ponse) in 'room_List'
+        res.render('search_Results', { rooms: rooms });
 
     });
 

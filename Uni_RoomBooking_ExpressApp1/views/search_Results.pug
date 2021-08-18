@@ -1,21 +1,14 @@
 extends layout
 
 block content
-    //div
-    .row
+    div.row
         table(class= 'w3-table-all w3-centered')
             thead
                 tr
-                 th Id
                  th Name
-                 th Availability
             tbody
                 each room in rooms
                     tr
                      td
-                            |#{room.id}
-                     td
                             |#{room.room}
-                     td
-                            |#{room.available}
                     //    a(href='/roomDetails/' + room.Name) #{room.Name}
