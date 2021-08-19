@@ -1,0 +1,39 @@
+extends layout
+
+block content
+    h1= title
+    p Here you can book an available room
+    .topnav
+        .dropdown
+            button.dropbtn
+                | Home
+                i.fa.fa-caret-down
+            .dropdown-content
+                a(href='/home') Home
+                a(href='#contact') Contact
+                a(href='#contact') About us    
+        a(href='/room_List') Rooms
+        a(href='/search_Results') Search
+        a(class='active', href='/booking') Booking
+        a(href='/login') Login 
+        a(href='/register') Register
+    .forms
+        form(action='/booking')
+            br
+            label(for='room') Room:
+            input#room(type='text', name='room', required='')
+            br
+            br
+            label(for='date') Date:
+            input#date(type='date', name='date', required='')
+            br
+            br
+            label(for='from') From:
+            input#from(type='time', name='from', required='')
+            br
+            br
+            label(for='to') To:
+            input#to(type='time', name='to', required='')
+            br
+            br
+            input(type='submit', value='Book')

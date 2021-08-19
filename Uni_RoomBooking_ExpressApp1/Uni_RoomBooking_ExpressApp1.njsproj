@@ -39,26 +39,34 @@
     <Content Include="Dao\room_Dao.js">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Dao\user_Dao.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="routes\index.js" />
     <Content Include="routes\users.js" />
     <Content Include="package.json" />
     <Content Include="public\stylesheets\main.css" />
     <Content Include="README.md" />
+    <Content Include="views\booking.pug">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="views\index.html" />
     <Content Include="views\index.pug" />
     <Content Include="views\layout.pug" />
     <Content Include="views\error.pug" />
     <Content Include="views\login.pug" />
+    <Content Include="views\register.pug">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="views\room_List.pug">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="views\search_Results.pug">
-      <SubType>Code</SubType>
-    </Content>
+    <Content Include="views\search_Results.pug" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dao\" />
     <Folder Include="Dao\Connection\" />
+    <Folder Include="controllers\" />
     <Folder Include="public\" />
     <Folder Include="public\images\" />
     <Folder Include="public\javascripts\" />

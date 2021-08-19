@@ -14,23 +14,11 @@ var users = require('./routes/users');
 var app = express();
 
 
-////create connection
-//const db = mysql.createConnection({
-//    host: 'localhost',
-//    user: 'root',
-//    password: 'root1234',
-//    database: 'db_test'
+// create application/json parser
+var jsonParser = bodyParser.json();
 
-//});
-
-////Connect to MySQL
-//db.connect(function (err) {
-//    if (err) {
-//        throw err;
-//    }
-//    console.log('MySQL connected');
-//});
-
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 
 // view engine setup
@@ -46,8 +34,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
+
+
 app.use('/', routes);
 app.use('/users', users);
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -79,7 +71,6 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
-
 
 
 

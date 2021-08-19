@@ -6,7 +6,17 @@ body {
 a {
     color: #00B7FF;
 }
-/* TOP NAVIGATION BAR STUFF */
+
+label {
+    background-color: #333;
+    color: white;
+    font-weight: bold;
+    display: block;
+    width: 142px;
+    float: left;
+    border: 3px solid #333;
+}
+/* start TOP NAVIGATION BAR STUFF */
 /* Add a black background color to the top navigation */
 .topnav {
     width: 100%;
@@ -26,12 +36,12 @@ a {
         /* Change the color of links on hover */
         .topnav a:hover {
             background-color: #ddd;
-            color: black;
+            color: white;
         }
 
         /* Add a color to the active/current link */
         .topnav a.active {
-            background-color: #04AA6D;
+            background-color: #9D0932;
             color: white;
         }
 
@@ -52,43 +62,109 @@ a {
         border: 1px solid #ccc;
     }
 }
+/*end TOPNAV bar stuff */
+
+/*start DROPDOWN STUFF */
+/* The dropdown container */
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+    /* Dropdown button */
+    .dropdown .dropbtn {
+        font-size: 16px;
+        border: none;
+        outline: none;
+        color: white;
+        padding: 14px 16px;
+        background-color: inherit;
+        font-family: inherit; /* Important for vertical align on mobile phones */
+        margin: 0; /* Important for vertical align on mobile phones */
+    }
+
+    /* Add background color to topnav links on hover */
+    .topnav a:hover, .dropdown:hover .dropbtn {
+        background-color: #9D0932;
+    }
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #9D0932;
+    min-width: 16px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        float: none;
+        color: whitesmoke;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+    }
+
+        /* Add a grey background color to dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #c1204d;
+        }
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+/*end DROP DOWN STUFF */
 
 /*start TOPNAV SEARCH STUFF */
-.topnav .search-container {
-    float: right;
+/*.topnav*/
+.search-container {
+    /*float: right;*/
+    width: 100%;
+    height: fit-content;
+    background-color: #9D0932;
+    overflow: auto;
 }
 
 /* Style the search box inside the navigation bar */
-.topnav input[type=text] {
+/*.topnav*/
+.search-container input[type=text] {
     float: left;
-    padding: 5px;
-    border: none;
-    margin-top: 8px;
-    margin-right: 16px;
-    font-size: 17px;
+    padding: 5px 5px 5px 5px ;
+    border: outset;
+    margin-top: 5px;
+    margin-right: 5px;
+    font-size: 21px;
 }
 
-.topnav .search-container button {
-    float: right;
+/*.topnav*/ 
+.search-container button {
+    float: left;
     padding: 5px 10px;
     margin-top: 8px;
     margin-right: 16px;
     background: #ddd;
     font-size: 17px;
-    border: none;
+    border: outset;
     cursor: pointer;
 }
 
-    .topnav .search-container button:hover {
+    /*.topnav*/
+.search-container button:hover {
         background: #ccc;
+
     }
 
 @media screen and (max-width: 600px) {
-    .topnav .search-container {
+    /*.topnav*/ 
+    .search-container {
         float: none;
     }
 
-        .topnav a, .topnav input[type=text], .topnav .search-container button {
+        /*.topnav*/
+        .search-container a, /*.topnav*/ .search-container input[type=text], /*.topnav*/ .search-container button {
             float: none;
             display: block;
             text-align: left;
@@ -97,8 +173,56 @@ a {
             padding: 14px;
         }
 
-    .topnav input[type=text] {
-        border: 1px solid #ccc;
+    /*.topnav*/
+    .search-container input[type=text] {
+        border: 2px solid #ccc;
     }
 }
 /*end TOPNAV SEARCH STUFF */
+
+/*start FORMS STUFF */
+/* Add a black background color to the top navigation */
+.forms {
+    width: 100%;
+    background-color: #9D0932;
+    overflow: auto;
+}
+    
+    .forms a {
+        float: right;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 12px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+        /* Change the color of links on hover */
+        /*.forms a:hover {
+            background-color: #ddd;
+            color: black;
+        }*/
+
+        /* Add a color to the active/current link */
+        /*.forms a.active {
+            background-color: #9D0932;
+            color: white;
+        }*/
+
+
+/* When the screen is less than 600px wide, stack the links and the search field vertically instead of horizontally */
+@media screen and (max-width: 600px) {
+    .forms a, .booking_form input[type=text] {
+        float: none;
+        display: block;
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        padding: 14px;
+    }
+
+    .forms input[type=text] {
+        border: 1px solid #ccc;
+    }
+}
+/*end FORMS STUFF */

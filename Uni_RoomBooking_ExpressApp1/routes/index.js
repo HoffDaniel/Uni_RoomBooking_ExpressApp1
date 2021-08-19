@@ -2,21 +2,28 @@
 var express = require('express');
 var router = express.Router();
 
+var bodyParser = require('body-parser');
+// create application/json parser
+var jsonParser = bodyParser.json();
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
+
 var room_Dao = require('../Dao/room_Dao.js');
+const { search } = require('./users.js');
 
+//var urlencodedParser = router.bodyParser.urlencoded({ extended: false });
+//var jsonParser = router.bodyParser.json();
 
+    
 
-
-/* GET home page. */
+////////////////////// NORMAL PAGES STUFFF //////////////////////
+/* GET ("read data") home page. */
 router.get('/', function (req, res) {
     res.render('index', { title: 'Final Year Project - A University Room Management System' });
 });
+////////////////////////////////////////////
 
-/* GET login page. */
-router.get('/login', function (req, res) {
-    res.render('login', { title: 'Login' });
-});
-
+////////////////////// STUFFF that needs database //////////////////////
 /* GET a list of all rooms */
 router.get('/room_List', function (req, res) {
 
@@ -30,20 +37,70 @@ router.get('/room_List', function (req, res) {
 
 });
 
-/* GET a list of all rooms but put it in search_Results*/
-router.post('/search_Results', function (req, res) {
-    let srch = req.body;
-
-    room_Dao.room_Dao.get_Rooms_Where(
-        srch,
-        function (rooms) {
-            
-        //"render" res(ponse) in 'room_List'
-        res.render('search_Results', { rooms: rooms });
-
-    });
-
+/* GET booking page. */
+router.get('/booking', function (req, res) {
+    res.render('booking', { title: 'Room Booking' });
 });
+
+/* GET search page. */
+router.get('/search_Results', function (req, res) {
+
+    var rooms = [
+        { id: '...', room: '...', building: '...' },
+    ];
+    console.log(rooms);
+    //"render" res(ponse) in 'room_List'
+    res.render('search_Results', { rooms: rooms });
+});
+
+/* POST ("insert data") search page. */
+router.post('/search_Results', jsonParser, function (req, res) {
+    
+    var search = req.body.search;
+    console.log("Searching for rooms with..." + search);
+    var search_All = '%' + search + '%'
+    room_Dao.room_Dao.get_Rooms_Like(
+        search_All,
+        function (rooms) {
+            console.log(rooms);
+            //"render" res(ponse) in 'room_List'
+            res.render('search_Results', { rooms: rooms });
+        }
+    );
+
+    //res.render('search_Results', { title: 'Search: ' + search });
+});
+////////////////////////////////////////////
+
+////////////////////// USER STUFFF //////////////////////
+/* GET login page. */
+router.get('/login', function (req, res) {
+    res.render('login', { title: 'Login' });
+});
+
+/* GET register page. */
+router.get('/register', function (req, res) {
+    res.render('register', { title: 'Registration' });
+});
+
+/* POST check login details with database*/
+router.post('/login', function (req, res, next) {
+    var username = req.body.username;
+    var password = req.body.password;
+
+    user_Dao.user_Dao.get_User(
+        username,
+        password,
+        function (user) {
+            console.log(user);
+            //"render" res(ponse) in 'room_List'
+            res.render('search_Results', { rooms: rooms });
+        }
+    );
+
+
+}
+//////////////////////////////////////////// 
 
 
 

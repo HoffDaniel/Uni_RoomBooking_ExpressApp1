@@ -1,14 +1,28 @@
 extends layout
 
 block content
-    //div
+    h1= 'List of all rooms:'
+    .topnav
+        .dropdown
+            button.dropbtn
+                | Home
+                i.fa.fa-caret-down
+            .dropdown-content
+                a(href='/') Home
+                a(href='#contact') Contact
+                a(href='#contact') About us    
+        a(class='active',href='/room_List') Rooms
+        a(href='/search_Results') Search
+        a(href='/booking') Booking
+        a(href='/login') Login 
+        a(href='/register') Register
     .row
         table(class= 'w3-table-all w3-centered')
             thead
                 tr
                  th Id
                  th Name
-                 th Availability
+                 th Building
             tbody
                 each room in rooms
                     tr
@@ -17,5 +31,5 @@ block content
                      td
                             |#{room.room}
                      td
-                            |#{room.available}
+                            |#{room.building}
                     //    a(href='/roomDetails/' + room.Name) #{room.Name}

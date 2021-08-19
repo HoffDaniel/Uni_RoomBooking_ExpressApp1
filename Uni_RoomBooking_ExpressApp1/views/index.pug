@@ -3,16 +3,19 @@ extends layout
 block content
   h1= title
   p Welcome to a room booking web application - Daniel Hoffman | CTEC3451 Final Year Project | De Montfort University |
-  // how to refrence the title if needed -> #{title}
-  div(class='topnav')
-    a(class='active', href='#home') Home
+  
+  .topnav
+    .dropdown
+        button.dropbtn
+            | Home
+            i.fa.fa-caret-down
+        .dropdown-content
+            a(href='/') Home
+            a(href='#contact') Contact
+            a(href='#contact') About us    
     a(href='/room_List') Rooms
-    a(href='/login') Login
-    a(href='#contact') Contact
-    a(href='#booking') Booking
-    div(class='search-container')
-        form(action='/search_Results.pug')
-            input(type="text" placeholder="Search rooms...", name='search')
-            button(type="submit")
-                i.fa.fa-search
+    a(href='/search_Results') Search
+    a(href='/booking') Booking
+    a(href='/login') Login 
+    a(href='/register') Register
     
