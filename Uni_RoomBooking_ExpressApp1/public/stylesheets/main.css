@@ -183,8 +183,10 @@ label {
 /*start FORMS STUFF */
 /* Add a black background color to the top navigation */
 .forms {
+    margin: auto;
     width: 100%;
     background-color: #9D0932;
+    padding: 100px;
     overflow: auto;
 }
     

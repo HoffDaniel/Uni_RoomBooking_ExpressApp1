@@ -9,7 +9,10 @@ var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 var room_Dao = require('../Dao/room_Dao.js');
+var user_Dao = require('../Dao/user_Dao.js');
+
 const { search } = require('./users.js');
+const { urlencoded } = require('express');
 
 //var urlencodedParser = router.bodyParser.urlencoded({ extended: false });
 //var jsonParser = router.bodyParser.json();
@@ -48,8 +51,6 @@ router.get('/search_Results', function (req, res) {
     var rooms = [
         { id: '...', room: '...', building: '...' },
     ];
-    console.log(rooms);
-    //"render" res(ponse) in 'room_List'
     res.render('search_Results', { rooms: rooms });
 });
 
@@ -75,7 +76,10 @@ router.post('/search_Results', jsonParser, function (req, res) {
 ////////////////////// USER STUFFF //////////////////////
 /* GET login page. */
 router.get('/login', function (req, res) {
-    res.render('login', { title: 'Login' });
+    var status = [
+        { status: 'Pending...' }
+    ];
+    res.render('login', { status: status });
 });
 
 /* GET register page. */
@@ -84,22 +88,29 @@ router.get('/register', function (req, res) {
 });
 
 /* POST check login details with database*/
-router.post('/login', function (req, res, next) {
+router.post('/login', urlencodedParser, function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
 
     user_Dao.user_Dao.get_User(
         username,
         password,
-        function (user) {
-            console.log(user);
-            //"render" res(ponse) in 'room_List'
-            res.render('search_Results', { rooms: rooms });
+        function (users) {
+            console.log(users);
+            var status = [];
+            if (users.length != 0) { //Not EMPTy yay search found user/login successful 
+                status.push({ status: 'Successful!'})
+                res.render('login', { status: status });
+            }
+            else {
+                status.push({ status: 'Login Failed... try again'})
+                res.render('login', { status: status });
+            }
         }
     );
 
 
-}
+});
 //////////////////////////////////////////// 
 
 
