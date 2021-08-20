@@ -16,7 +16,7 @@ const { urlencoded } = require('express');
 
 //var urlencodedParser = router.bodyParser.urlencoded({ extended: false });
 //var jsonParser = router.bodyParser.json();
-
+var user_Current = 'Current User Is Displayed here'
     
 
 ////////////////////// NORMAL PAGES STUFFF //////////////////////
@@ -42,7 +42,7 @@ router.get('/room_List', function (req, res) {
 
 /* GET booking page. */
 router.get('/booking', function (req, res) {
-    res.render('booking', { title: 'Room Booking' });
+    res.render('booking', { title: user_Current});
 });
 
 /* GET search page. */
@@ -79,7 +79,7 @@ router.get('/login', function (req, res) {
     var status = [
         { status: 'Pending...' }
     ];
-    res.render('login', { status: status });
+    res.render('login', { status: status, title: });
 });
 
 /* GET register page. */
@@ -91,6 +91,7 @@ router.get('/register', function (req, res) {
 router.post('/login', urlencodedParser, function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
+    
 
     user_Dao.user_Dao.get_User(
         username,
@@ -100,11 +101,13 @@ router.post('/login', urlencodedParser, function (req, res) {
             var status = [];
             if (users.length != 0) { //Not EMPTy yay search found user/login successful 
                 status.push({ status: 'Successful!'})
-                res.render('login', { status: status });
+                
+                user_Current = username;
+                res.render('logged_in', { title: user_Current })
             }
             else {
                 status.push({ status: 'Login Failed... try again'})
-                res.render('login', { status: status });
+                res.render('login', { status: status, title: 'FAIILLLL' });
             }
         }
     );
