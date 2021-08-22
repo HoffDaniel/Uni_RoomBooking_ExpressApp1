@@ -24,18 +24,17 @@ var room_Dao = {
         mysql_connection.mysql_connection.close_Sql_con(connection); 
     },
 
-     get_Rooms_Like: function (srch, callback) {
+    get_Rooms_Like: function (srch, callback) {
         //Connect
         var connection = mysql_connection.mysql_connection.get_Sql_con();
         var rooms = [];
-        console.log(srch)
-        
-        
+        console.log(srch);
+        var search_All = '%' + search + '%' //need % to search all in mysql
         //If succeful connection
-         if (connection) {
+        if (connection) {
             //Query
-            var sql_Statement = 'SELECT * FROM rooms WHERE room LIKE' + mysql.escape(srch);
-             console.log(sql_Statement)
+            var sql_Statement = 'SELECT * FROM rooms WHERE room LIKE' + mysql.escape(search_All);
+            console.log(sql_Statement)
             connection.query(sql_Statement, function (err, results, fields) {
                 results.forEach(function (result) {
                     rooms.push(result) //Put the information in rooms

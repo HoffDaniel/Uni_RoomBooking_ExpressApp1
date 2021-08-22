@@ -9,9 +9,13 @@
   <body>
     <h1></h1>
     <p>Welcome to a room booking web application - Daniel Hoffman | CTEC3451 Final Year Project | De Montfort University |</p>
-    <!-- how to refrence the title if needed -> #{title}-->
-    <div class="topnav"><a class="active" href="#home">Home</a><a href="/room_List">Rooms</a><a href="/login">Login</a><a href="#contact">Contact</a><a href="#booking">Booking</a>
-      <input type="text" placeholder="Search rooms...">
+    <div class="topnav">
+      <div class="dropdown">
+        <button class="dropbtn">Home<i class="fa fa-caret-down"></i></button>
+        <div class="dropdown-content"><a href="/">Home</a><a href="#contact">Contact</a><a href="#about">About us    </a></div>
+      </div>
+        <a href="/login">Login </a>
+        <a href="/register">Register</a>
     </div>
   </body>
 </html>

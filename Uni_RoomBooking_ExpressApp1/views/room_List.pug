@@ -14,7 +14,7 @@ block content
         a(class='active',href='/room_List') Rooms
         a(href='/search_Results') Search
         a(href='/booking') Booking
-        a(href='/login') Logout
+        a(href='/logout', onclick="return confirm('You are about to logout')") Logout
     .row
         table(class= 'w3-table-all w3-centered')
             thead

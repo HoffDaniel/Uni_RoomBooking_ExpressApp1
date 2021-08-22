@@ -16,10 +16,11 @@ const { urlencoded } = require('express');
 
 //var urlencodedParser = router.bodyParser.urlencoded({ extended: false });
 //var jsonParser = router.bodyParser.json();
-var user_Current = 'Current User Is Displayed here'
+var user_Current = 'Current User Is Displayed here';
+var logged_in = false;
     
 
-////////////////////// NORMAL PAGES STUFFF //////////////////////
+////////////////////// Home PAGE STUFFF //////////////////////
 /* GET ("read data") home page. */
 router.get('/', function (req, res) {
     res.render('index', { title: 'Final Year Project - A University Room Management System' });
@@ -59,17 +60,13 @@ router.post('/search_Results', jsonParser, function (req, res) {
     
     var search = req.body.search;
     console.log("Searching for rooms with..." + search);
-    var search_All = '%' + search + '%'
     room_Dao.room_Dao.get_Rooms_Like(
-        search_All,
+        search,
         function (rooms) {
-            console.log(rooms);
-            //"render" res(ponse) in 'room_List'
+            console.log(rooms);       
             res.render('search_Results', { rooms: rooms });
         }
     );
-
-    //res.render('search_Results', { title: 'Search: ' + search });
 });
 ////////////////////////////////////////////
 
@@ -79,7 +76,16 @@ router.get('/login', function (req, res) {
     var status = [
         { status: 'Pending...' }
     ];
-    res.render('login', { status: status, title: });
+    res.render('login', { status: status, title: 'Login' });
+});
+
+/* GET login page. */
+router.get('/logout', function (req, res) {
+    var status = [
+        { status: 'You just logged out...' }
+    ];
+    logged_in = false
+    res.render('login', { status: status, title: 'Login' });
 });
 
 /* GET register page. */
@@ -103,7 +109,8 @@ router.post('/login', urlencodedParser, function (req, res) {
                 status.push({ status: 'Successful!'})
                 
                 user_Current = username;
-                res.render('logged_in', { title: user_Current })
+                logged_in = true;
+                res.render('logout', { title: user_Current })
             }
             else {
                 status.push({ status: 'Login Failed... try again'})
