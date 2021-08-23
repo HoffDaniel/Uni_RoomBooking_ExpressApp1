@@ -2,7 +2,7 @@ extends layout
 
 block content
     h1= title
-    p Here you can book an available room
+    p Here you can book an available room - you need to be logged to use this service
     .topnav
         .dropdown
             button.dropbtn
@@ -17,10 +17,14 @@ block content
         a(class='active', href='/booking') Booking
         a(href='/logout') Logout 
     .forms
-        form(action='/booking')
+        form(action='/booking', method = 'POST')
             br
             label(for='room') Room:
             input#room(type='text', name='room', required='')
+            br
+            br
+            label(for='building') Building:
+            input#building(type='text', name='building', required='')
             br
             br
             label(for='date') Date:
@@ -36,3 +40,13 @@ block content
             br
             br
             input(type='submit', value='Book')
+    .row
+        table(class= 'w3-table-all w3-centered')
+            thead
+                tr
+                 th Booking Status:
+            tbody
+                each state in status
+                    tr
+                     td
+                        |#{state.status}

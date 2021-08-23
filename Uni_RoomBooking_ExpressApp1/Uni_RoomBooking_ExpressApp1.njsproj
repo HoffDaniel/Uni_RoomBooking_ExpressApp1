@@ -56,9 +56,6 @@
     <Content Include="views\index.pug" />
     <Content Include="views\layout.pug" />
     <Content Include="views\error.pug" />
-    <Content Include="views\logged_in.pug">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="views\login.pug" />
     <Content Include="views\logout.pug">
       <SubType>Code</SubType>

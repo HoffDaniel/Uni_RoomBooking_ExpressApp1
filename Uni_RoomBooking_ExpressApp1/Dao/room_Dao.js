@@ -17,11 +17,11 @@ var room_Dao = {
                 results.forEach(function (result) {
                     rooms.push(result) //Put the information in rooms
                 });
-                callback(rooms)
+                callback(rooms);
             });
         }
         //Close connection
-        mysql_connection.mysql_connection.close_Sql_con(connection); 
+        mysql_connection.mysql_connection.close_Sql_con(connection);
     },
 
     get_Rooms_Like: function (srch, callback) {
@@ -29,7 +29,7 @@ var room_Dao = {
         var connection = mysql_connection.mysql_connection.get_Sql_con();
         var rooms = [];
         console.log(srch);
-        var search_All = '%' + search + '%' //need % to search all in mysql
+        var search_All = '%' + srch + '%' //need % to search all in mysql
         //If succeful connection
         if (connection) {
             //Query
@@ -39,15 +39,35 @@ var room_Dao = {
                 results.forEach(function (result) {
                     rooms.push(result) //Put the information in rooms
                 });
-                callback(rooms)
+                callback(rooms);
             });
         }
         //Close connection
         mysql_connection.mysql_connection.close_Sql_con(connection);
+    },
+
+     get_Room_ID:  function (room, building, callback) {
+        var connection = mysql_connection.mysql_connection.get_Sql_con();
+        var roomID = [];
+        if (connection) {
+            var sql_Statement = 'SELECT * FROM rooms WHERE room LIKE' + mysql.escape(room) + 'AND building LIKE' + mysql.escape(building);
+            connection.query(sql_Statement, function (err, results, fields) {
+                results.forEach(function (result) {
+                    roomID.push(result) //Put the information in rooms
+                });
+                console.log("inside getID")
+                console.log(roomID);
+                callback(roomID);
+            });
+        }
+        //Close connection
+        var finalID = roomID
+        mysql_connection.mysql_connection.close_Sql_con(connection);
+        return roomID;
     }
 
 
 };
 
-
+//module.exports.room_Dao = get_Room_ID;
 module.exports.room_Dao = room_Dao;

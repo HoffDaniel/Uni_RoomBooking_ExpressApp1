@@ -8,8 +8,8 @@ var user_Dao = {
         var connection = mysql_connection.mysql_connection.get_Sql_con();
         var users = [];
         //for testing only
-        console.log(username);
-        console.log(password);
+       // console.log(username);
+        //console.log(password);
 
         //If succeful connection
         if (connection) {
@@ -26,7 +26,7 @@ var user_Dao = {
         //Close connection
         mysql_connection.mysql_connection.close_Sql_con(connection);
     },
-
+   
 }
 
 module.exports.user_Dao = user_Dao;
