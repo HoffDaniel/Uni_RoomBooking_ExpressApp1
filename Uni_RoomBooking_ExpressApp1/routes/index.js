@@ -154,17 +154,58 @@ router.post('/booking', urlencodedParser , function (req, res) {
         req.body.room,
         req.body.building,
         function (result) {
-            var roomID = result[0].roomID;
-            console.log(roomID);
             var booking = {
                 userID: user_Current.ID,
-                roomID: roomID,
+                roomID: result[0].roomID,
                 date: req.body.date,
                 from: req.body.from,
                 to: req.body.to
             };
-            console.log(booking);
-            booking_Dao.
+            //console.log(booking);
+            booking_Dao.booking.get_booking_room(
+                booking,
+                function (books) { //books should be a list of bookings for that room
+                    //bookingID: , userID: , roomID: , date: , timeStart: , timeEnd
+                    var booking_confirmed = true;
+                    for (let i = 0; i < books.length; i++) {
+                        if (books[i].date !== booking.date)//not the same date 
+                        {
+                            //go next 
+                        }
+                        else {
+                            if (books[i].timeStart >= booking.to) {//if our booking ends before an already active booking then that is amazing exit and check next ammointment
+                                //greate go next
+                            }
+                            else if (books[i].timeStart < booking.to) {//else TO must be greater (if above is not true)
+                                if (books[i].timeEnd >= booking.to) {
+                                    //terrible!!!
+                                    booking_confirmed = false;
+                                    break;
+                                }
+                                else {//else TO must be Greater than end time
+                                    if (books[i].timeEnd <= booking.from) {
+                                        //greate go next
+                                    }
+                                    else {
+                                        //terrible!!!
+                                        booking_confirmed = false;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        var booking_confirmed = true; //this will only be executed if we dont exite the for loop beforehand
+                    }
+                    if (booking_confirmed) {
+                    //execute final matryoshka
+                        booking_Dao.booking.set_booking
+                    }
+                    else {
+                        console.log("booking is:" + booking_confirmed);// should display false
+                    }
+                    
+                }
+            )
 
            }
     );
