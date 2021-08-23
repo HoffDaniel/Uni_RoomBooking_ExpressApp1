@@ -2,6 +2,7 @@ extends layout
 
 block content
   h1= 'Search results '
+  p Here you can search for a specific room
   .topnav
       .dropdown
           button.dropbtn
@@ -14,6 +15,7 @@ block content
       a(href='/room_List') Rooms
       a(class='active', href='/search_Results') Search
       a(href='/booking') Booking
+      a(href='/my_Bookings') My Bookings
       a(href='/logout', onclick="return confirm('You are about to logout')") Logout
   .search-container
       form(action='/search_Results', method='POST')

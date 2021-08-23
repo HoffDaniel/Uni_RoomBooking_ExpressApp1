@@ -7,12 +7,6 @@ var mysql_connection = {
     get_Sql_con: function () {
 
         var con = mysql.createConnection(mysql_connection_string.mysql_connection_string.connectionString);
-        //var con = mysql.createConnection({
-        //    host: "localhost",
-        //    user: "root",
-        //    password: "root1234",
-        //    database: "db_test"
-        //});
 
         con.connect(function (err) {
         if (err) throw err;
@@ -35,23 +29,3 @@ var mysql_connection = {
 }
 
 module.exports.mysql_connection = mysql_connection;
-
-
-
-
-/*
-//exports.con = con;
-*/
-
-/* var mySQL_connection = {
- *      connectionString : {
- *      
- *      host : ""
- *      user : ""
- *      password : ""
- *      database : ""
- *      
- *      }
- *     };
- *   exports.mySQL_connection = mySQL_connection
-*/

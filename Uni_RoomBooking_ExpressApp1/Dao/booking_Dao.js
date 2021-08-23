@@ -10,7 +10,7 @@ var booking = {
         var connection = mysql_connection.mysql_connection.get_Sql_con();
         var bookings = [];
         if (connection) {
-            var sql_Statement = 'SELECT * FROM bookings WHERE roomID LIKE' + mysql.escape(roomID);
+            var sql_Statement = 'SELECT * FROM bookings WHERE roomID =' + mysql.escape(roomID);
             connection.query(sql_Statement, function (err, results, fields) {
                 results.forEach(function (result) {
                     bookings.push(result) //Put the information in rooms
@@ -20,11 +20,23 @@ var booking = {
                 callback(bookings);
             });
         }
-
     },
+
     get_booking_user: function (userID, callback) {
-
+        var connection = mysql_connection.mysql_connection.get_Sql_con();
+        var bookings = [];
+        if (connection) {
+            var sql_Statement = 'SELECT * FROM bookings where userID =' + mysql.escape(userID);
+            connection.query(sql_Statement, function (err, results, fields) {
+                results.forEach(function (result) {
+                    bookings.push(result) //Put the information in rooms
+                });
+                console.log(bookings);
+                callback(bookings);
+            });
+        };
     },
+
     check_booking: function (booking_Info) {
 
     },
@@ -42,14 +54,14 @@ var booking = {
                 mysql.escape(roomID) + ',' +
                 mysql.escape(date) + ',' +
                 mysql.escape(timeStart) + ',' +
-                mysql.escape(timeEnd);
+                mysql.escape(timeEnd) + ')';
             connection.query(sql_Statement, function (err, result) {
                 if (err) throw err;
                 //console.log("A booking has been succesfullyy inserteddd yay");
-                callback("A booking has been succesfullyy inserteddd yay")
-            }
+                callback("A booking has been succesfullyy inserteddd yay");
+            });
 
-        }
+        };
 
 
     }

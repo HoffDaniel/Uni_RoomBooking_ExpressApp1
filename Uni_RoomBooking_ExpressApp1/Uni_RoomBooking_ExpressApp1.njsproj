@@ -67,7 +67,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="views\search_Results.pug" />
-    <Content Include="views\your_Booking.pug" />
+    <Content Include="views\my_Bookings.pug" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dao\" />

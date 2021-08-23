@@ -2,6 +2,7 @@ extends layout
 
 block content
     h1= 'List of all rooms:'
+    p Here is a list of all the rooms
     .topnav
         .dropdown
             button.dropbtn
@@ -14,6 +15,7 @@ block content
         a(class='active',href='/room_List') Rooms
         a(href='/search_Results') Search
         a(href='/booking') Booking
+        a(href='/my_Bookings') My Bookings
         a(href='/logout', onclick="return confirm('You are about to logout')") Logout
     .row
         table(class= 'w3-table-all w3-centered')

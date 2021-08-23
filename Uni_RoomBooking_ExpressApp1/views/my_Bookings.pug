@@ -1,0 +1,48 @@
+extends layout
+
+block content
+  h1= 'My Bookings'
+  p Here you can see all your bookings
+  .topnav
+      .dropdown
+          button.dropbtn
+              | Home
+              i.fa.fa-caret-down
+          .dropdown-content
+              a(href='/') Home
+              a(href='#contact') Contact
+              a(href='#about') About us    
+      a(href='/room_List') Rooms
+      a(href='/search_Results') Search
+      a(href='/booking') Booking
+      a(class='active', href='/my_Bookings') My Bookings
+      a(href='/logout', onclick="return confirm('You are about to logout')") Logout
+  .table
+      table(class= 'w3-table-all w3-centered')
+          thead
+              tr
+               th Booking ID
+               th User ID
+               th Room ID
+               th Date
+               th Starting 
+               th Ending
+          tbody
+              each booking in bookings
+                  tr
+                   td
+                          |#{booking.bookingID}
+                   td
+                          |#{booking.userID}
+                   td
+                          |#{booking.roomID}
+                   td
+                          |#{booking.date}
+                   td
+                          |#{booking.timeStart}
+                   td
+                          |#{booking.timeEnd}
+
+  
+  
+  

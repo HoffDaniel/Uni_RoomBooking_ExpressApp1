@@ -61,13 +61,9 @@ var room_Dao = {
             });
         }
         //Close connection
-        var finalID = roomID
         mysql_connection.mysql_connection.close_Sql_con(connection);
-        return roomID;
     }
 
 
 };
-
-//module.exports.room_Dao = get_Room_ID;
 module.exports.room_Dao = room_Dao;
