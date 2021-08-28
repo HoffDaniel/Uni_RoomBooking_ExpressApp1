@@ -18,31 +18,36 @@ block content
       a(class='active', href='/my_Bookings') My Bookings
       a(href='/logout', onclick="return confirm('You are about to logout')") Logout
   .table
-      table(class= 'w3-table-all w3-centered')
-          thead
-              tr
-               th Booking ID
-               th User ID
-               th Room ID
-               th Date
-               th Starting 
-               th Ending
-          tbody
-              each booking in bookings
-                  tr
-                   td
-                          |#{booking.bookingID}
-                   td
-                          |#{booking.userID}
-                   td
-                          |#{booking.roomID}
-                   td
-                          |#{booking.date}
-                   td
-                          |#{booking.timeStart}
-                   td
-                          |#{booking.timeEnd}
-
-  
-  
-  
+    table(class= 'w3-table-all w3-centered')
+        thead
+            tr
+                th Booking ID
+                th User ID
+                th Room ID
+                th Date
+                th Starting
+                th Ending
+                th Modify
+        tbody
+            each booking, index in bookings
+                   tr 
+                        td #{booking.bookingID}
+                        td #{booking.userID}
+                        td #{booking.roomID}
+                        td #{booking.date}
+                        td #{booking.timeStart}
+                        td #{booking.timeEnd}
+                        td
+                            form(action='/my_Bookings', method = 'POST')
+                                br
+                                label(for='bookingID')
+                                select#bookingID(type='text', name='bookingID', required='')
+                                    option #{booking.bookingID}                            
+                                input(type='submit', onclick="return confirm('Your are about to cancel a booking')", value = "Cancel")
+  form(action='/my_Bookings', method = 'POST')
+    br
+    label(for='bookingID') Booking ID:
+    select#bookingID(type='text', name='bookingID', required='')
+        each value in bookings
+            option #{value.bookingID}
+    input(type='submit', onclick="return confirm('Your are about to cancel a booking')", value = "Cancel") 

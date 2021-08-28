@@ -19,7 +19,7 @@ const { urlencoded } = require('express');
 //var urlencodedParser = router.bodyParser.urlencoded({ extended: false });
 //var jsonParser = router.bodyParser.json();
 var user_Current = {
-    name: "Current User Is Displayed here<- if you see this on the page click logout to login",
+    name: "Current User Is Displayed here<- if you see this on the page click logout or /login",
     isLogged: "false",
     ID: "userID"
 }
@@ -113,7 +113,7 @@ router.post('/login', urlencodedParser, function (req, res) {
     var password = req.body.password;
     
 
-    user_Dao.user_Dao.get_User(
+    user_Dao.user_Dao.get_User_Name_Pwd(
         username,
         password,
         function (users) {
@@ -142,13 +142,15 @@ router.post('/register', urlencodedParser, function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
     var email = req.body.email;
+    var status = [];
 
-    user_Dao.user_Dao.check_User_Email(
+    user_Dao.user_Dao.get_User_Email_Name(
         email,
+        username,
         function (users) {
-            var status = [];
-            if (users.length != 0) { //Not EMPTy yay search found user/login successful 
-                status.push({ status: 'This email is already taken!' })
+            
+            if (users.length != 0) { //Not EMPTy email or username  was found => 
+                status.push({ status: 'This email or username is already taken!' })
                 res.render('register', { status: status, title: "Registration" })
             }
             else {
@@ -185,7 +187,7 @@ router.get('/my_Bookings', function (req, res) {
     booking_Dao.booking.get_booking_user(
         user_Current.ID,
         function (bookings) {
-            console.log(bookings);
+            //console.log(bookings);
             res.render('my_Bookings', { bookings: bookings });
         }
     );
@@ -194,9 +196,7 @@ router.get('/my_Bookings', function (req, res) {
 
 router.post('/booking', urlencodedParser , function (req, res) {
   
-    var status = [
-        { status: 'Pending...' }
-    ];
+    var status = [];
     var room = req.body.room;
     var building = req.body.building;
     var date = req.body.date;
@@ -255,7 +255,7 @@ router.post('/booking', urlencodedParser , function (req, res) {
                 if (booking_confirmed) {
                     //execute final matryoshka
                     booking_Dao.booking.set_booking(booking, function (confirmation) {
-                        status.push({ status: booking_confirmed });
+                        status.push({ status: 'Booking added, you can see it under My Bookings' });
                         res.render('booking', { status: status, title: user_Current.name });
                     })
                 }
@@ -270,6 +270,25 @@ router.post('/booking', urlencodedParser , function (req, res) {
         status.push({ status: 'Booking Failed... Your are not logged in...please loggin to make a booking' });
         res.render('booking', { status: status, title: user_Current.name });
     }
+});
+
+
+router.post('/my_Bookings', urlencodedParser, function (req, res) {
+
+    var bookingID = req.body.bookingID;
+    console.log(bookingID);
+
+    //Cancel the selected booking
+    booking_Dao.booking.cancel_booking(bookingID);
+
+    //Display updated bookings (should be less then it was)
+    booking_Dao.booking.get_booking_user(
+        user_Current.ID,
+        function (bookings) {
+            console.log(bookings);
+            res.render('my_Bookings', { bookings: bookings });
+        }
+    );
 });
 
 ////////////////////////////////////////////

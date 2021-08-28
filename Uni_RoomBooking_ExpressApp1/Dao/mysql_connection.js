@@ -9,8 +9,8 @@ var mysql_connection = {
         var con = mysql.createConnection(mysql_connection_string.mysql_connection_string.connectionString);
 
         con.connect(function (err) {
-        if (err) throw err;
-        console.log("Connected YehAw!");
+        if (err) throw err; //Error
+        console.log("Connected YehAw!");//Connection successful
         });
 
         return con;
@@ -20,8 +20,8 @@ var mysql_connection = {
     close_Sql_con: function (connection) {
 
         connection.end(function (err) {
-            if (err) throw err;
-            console.log("Disco YehAw!");
+            if (err) throw err;//Error
+            console.log("Disco YehAw!");//Disconnection successful
         });
 
     }

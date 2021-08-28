@@ -3,7 +3,7 @@ var mysql = require('mysql');
 
 var user_Dao = {
 
-    get_User: function (username, password, callback) {
+    get_User_Name_Pwd: function (username, password, callback) {
         //Connect
         var connection = mysql_connection.mysql_connection.get_Sql_con();
         var users = [];
@@ -24,7 +24,7 @@ var user_Dao = {
         mysql_connection.mysql_connection.close_Sql_con(connection);
     },
 
-    check_User_Email: function (email, callback) {
+    get_User_Email_Name: function (email, username, callback) {
         //Connect
         var connection = mysql_connection.mysql_connection.get_Sql_con();
         var users = [];
@@ -32,7 +32,7 @@ var user_Dao = {
         //If succeful connection
         if (connection) {
             //Query
-            var sql_Statement = 'SELECT * FROM users WHERE email LIKE' + mysql.escape(email);
+            var sql_Statement = 'SELECT * FROM users WHERE email LIKE' + mysql.escape(email) + 'OR username LIKE' + mysql.escape(username);
             //console.log(sql_Statement)
             connection.query(sql_Statement, function (err, results, fields) {
                 results.forEach(function (result) {
