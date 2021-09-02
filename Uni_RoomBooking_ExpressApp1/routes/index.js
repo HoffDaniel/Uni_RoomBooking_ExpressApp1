@@ -160,7 +160,7 @@ router.post('/register', urlencodedParser, function (req, res) {
                     email
                 );
                 status.push({ status: 'You have been registered now you can login' })
-                res.render('register', { status: status, title: users })
+                res.render('register', { status: status, title: "Registration" })
             }
         }
     );
