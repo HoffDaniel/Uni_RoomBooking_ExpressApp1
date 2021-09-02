@@ -20,7 +20,7 @@ const { urlencoded } = require('express');
 //var jsonParser = router.bodyParser.json();
 var user_Current = {
     name: "Current User Is Displayed here<- if you see this on the page click logout or /login",
-    isLogged: "false",
+    isLogged: false,
     ID: "userID"
 }
 //var user_Current = "Current User Is Displayed here <- if you see this on the page click logout to login";
@@ -30,7 +30,7 @@ var user_Current = {
 ////////////////////// Home PAGE STUFFF //////////////////////
 /* GET ("read data") home page. */
 router.get('/', function (req, res) {
-    res.render('index', { title: 'Final Year Project - A University Room Management System' });
+    res.render('index', {login: user_Current.isLogged, title: 'Final Year Project - A University Room Management System' });
 });
 ////////////////////////////////////////////
 
@@ -195,7 +195,10 @@ router.get('/my_Bookings', function (req, res) {
 
 
 router.post('/booking', urlencodedParser , function (req, res) {
-  
+
+    // 1. We get all the booking information that was submitted
+    // 2. We from the building and room we get the room ID
+    // 3. Determine if the new booking crosses with other bookings (for that room) => checking date and times
     var status = [];
     var room = req.body.room;
     var building = req.body.building;
@@ -204,67 +207,85 @@ router.post('/booking', urlencodedParser , function (req, res) {
     var to = req.body.to;
     var booking = {
         userID: user_Current.ID,
-        roomID: "unknow",
+        roomID: "unknown",
         date: date,
         from: from,
         to: to
     };
 
     if (user_Current.isLogged) {        
-        room_Dao.room_Dao.get_Room_ID(
+        room_Dao.room_Dao.get_Room_ID( //Get the room id to simplify things
             room,
             building,
             function (result) {
-                booking.roomID = result[0].roomID;
+                booking.roomID = result[0].roomID; // put the found ID in the booking infor
+                booking_Dao.booking.get_booking_room(// finds all the bookings with specified roomID
+                    booking.roomID,
+                    function (books) { //use the results to check date and times
+                        //books = [{bookingID: , userID: , roomID: , date: , timeStart: , timeEnd}];
+                        var booking_confirmed = true;
+                       
+                        for (let i = 0; i < Object.keys(books).length; i++) {
+                            console.log("Entering for loop" + i);
+                            
+                            if (books[i].date !== booking.date)//not the same date
+                            {
+                                //go next
+                                console.log("date is not the same proceed with booking");
+                                console.log("next");
+                            }
+                            else {//
+                                if (books[i].timeStart >= booking.to) {//if our booking ends before an already active booking then that is amazing exit and check next ammointment
+                                    //greate go next
+                                    console.log("this booking STARTS AFTER the END of the new booking");
+                                    console.log("next");
+                                }
+                                else if (books[i].timeStart < booking.to) {//else TO must be greater (if above is not true)
+                                    console.log("this booking STARTS BEFORE the END of the new booking")
+                                    if (books[i].timeEnd >= booking.to) {
+                                        //terrible!!!
+                                        console.log("this booking ENDS AFTER the END of the new booking");
+                                        console.log("break");
+                                        booking_confirmed = false;
+                                        break;
+                                    }
+                                    else {//else TO must be Greater than end time
+                                        console.log("this booking ENDS BEFORE the END of the new booking");
+                                        if (books[i].timeEnd <= booking.from) {
+                                            //greate go next
+                                            console.log("this booking ENDS BEFORE the START of the new booking");
+                                            console.log("next");
+                                        }
+                                        else {
+                                            //terrible!!!
+                                            console.log("this booking ENDS AFTER the START of the new booking");
+                                            console.log("break");
+                                            booking_confirmed = false;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            booking_confirmed = true; //this will only be executed if we dont exite the for loop beforehand
+                        }
+                        console.log(booking_confirmed);
+                        if (booking_confirmed) {
+                            //execute final matryoshka
+                            booking_Dao.booking.set_booking(booking, function (confirmation) {
+                                status.push({ status: 'Booking added, you can see it under My Bookings' });
+                                res.render('booking', { status: status, title: user_Current.name });
+                            })
+                        }
+                        else {
+                            status.push({ status: 'Booking Failed... Try another date/time' });
+                            res.render('booking', { status: status, title: user_Current.name });
+                        }
+                    }
+                )
+
             }
         );
-        booking_Dao.booking.get_booking_room(
-            booking.roomID,
-            function (books) { //books should be a list of bookings for that room
-                //bookingID: , userID: , roomID: , date: , timeStart: , timeEnd
-                var booking_confirmed = true;
-                for (let i = 0; i < books.length; i++) {
-                    if (books[i].date !== booking.date)//not the same date
-                    {
-                        //go next
-                    }
-                    else {
-                        if (books[i].timeStart >= booking.to) {//if our booking ends before an already active booking then that is amazing exit and check next ammointment
-                            //greate go next
-                        }
-                        else if (books[i].timeStart < booking.to) {//else TO must be greater (if above is not true)
-                            if (books[i].timeEnd >= booking.to) {
-                                //terrible!!!
-                                booking_confirmed = false;
-                                break;
-                            }
-                            else {//else TO must be Greater than end time
-                                if (books[i].timeEnd <= booking.from) {
-                                    //greate go next
-                                }
-                                else {
-                                    //terrible!!!
-                                    booking_confirmed = false;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    var booking_confirmed = true; //this will only be executed if we dont exite the for loop beforehand
-                }
-                if (booking_confirmed) {
-                    //execute final matryoshka
-                    booking_Dao.booking.set_booking(booking, function (confirmation) {
-                        status.push({ status: 'Booking added, you can see it under My Bookings' });
-                        res.render('booking', { status: status, title: user_Current.name });
-                    })
-                }
-                else {
-                    status.push({ status: 'Booking Failed... Try another date/time' });
-                    res.render('booking', { status: status, title: user_Current.name });
-                }
-            }
-        )
+
     }
     else {
         status.push({ status: 'Booking Failed... Your are not logged in...please loggin to make a booking' });

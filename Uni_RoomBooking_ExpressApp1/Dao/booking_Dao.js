@@ -9,11 +9,23 @@ var booking = {
     get_booking_room: function (roomID, callback) {
         var connection = mysql_connection.mysql_connection.get_Sql_con();
         var bookings = [];
+        console.log(roomID);
         if (connection) {
             var sql_Statement = 'SELECT * FROM bookings WHERE roomID =' + mysql.escape(roomID);
             connection.query(sql_Statement, function (err, results, fields) {
                 results.forEach(function (result) {
-                    bookings.push(result) //Put the information in rooms
+                   
+                    const d = new Date(result.date);
+                    var year = d.getFullYear();
+                    var month = '' + (d.getMonth() + 1);
+                    var day = '' + d.getDate();
+                    if (month.length < 2) { month = '0' + month; }
+                    if (day.length < 2) { day = '0' + day; }
+                    const formated_date = year + "-" + month + "-" + day 
+
+                    result.date = formated_date;//update the date in the result
+                    bookings.push(result); //Put the information in rooms
+
                 });
                 console.log("inside get_BKings")
                 console.log(bookings);
@@ -43,7 +55,7 @@ var booking = {
 
                     result.date = mysql_Date_formated;//update the date in the result 
                     
-                    bookings.push(result) //Put the information in bookings                   
+                    bookings.push(result); //Put the information in bookings
                 });
                 //console.log(bookings);
                 
