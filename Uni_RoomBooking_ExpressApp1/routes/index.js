@@ -94,6 +94,7 @@ router.get('/logout', function (req, res) {
         { status: 'You just logged out...' }
     ];
     user_Current.isLogged = false;
+    user_Current.name = "Current User Is Displayed here<- if you see this on the page click logout or /login";
     res.render('login', { status: status, title: 'Login' });
 });
 

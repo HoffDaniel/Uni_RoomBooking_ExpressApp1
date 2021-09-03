@@ -11,7 +11,7 @@ var mysql_connection_string = {
         host: "localhost",
         user: "root",
         password: "root1234",
-        database: 'db_test'
+        database: 'otherdatabase'
     }
 };
 

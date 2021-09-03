@@ -6,15 +6,18 @@ var user_Dao = require('./user_Dao.js');
 
 
 var booking = {
+    //Get all the bookings with specified roomID 
     get_booking_room: function (roomID, callback) {
+        //Connect to database
         var connection = mysql_connection.mysql_connection.get_Sql_con();
         var bookings = [];
         console.log(roomID);
+        //Query
         if (connection) {
             var sql_Statement = 'SELECT * FROM bookings WHERE roomID =' + mysql.escape(roomID);
             connection.query(sql_Statement, function (err, results, fields) {
                 results.forEach(function (result) {
-                   
+                    //Format date                    
                     const d = new Date(result.date);
                     var year = d.getFullYear();
                     var month = '' + (d.getMonth() + 1);
@@ -27,7 +30,7 @@ var booking = {
                     bookings.push(result); //Put the information in rooms
 
                 });
-                console.log("inside get_BKings")
+                console.log("inside get_BKings_rooms query")
                 console.log(bookings);
                 callback(bookings);
             });
@@ -36,8 +39,11 @@ var booking = {
         mysql_connection.mysql_connection.close_Sql_con(connection);
     },
 
+    //Get all the bookings from the user
     get_booking_user: function (userID, callback) {
+        //Connect
         var connection = mysql_connection.mysql_connection.get_Sql_con();
+        //Query
         var bookings = [];
         if (connection) {
             var sql_Statement = 'SELECT * FROM bookings where userID =' + mysql.escape(userID);
@@ -66,8 +72,11 @@ var booking = {
         mysql_connection.mysql_connection.close_Sql_con(connection);
     },
 
+    //Delete the specified booking
     cancel_booking: function (bookingID) {
+        //Connect
         var connection = mysql_connection.mysql_connection.get_Sql_con();
+        //Query
         if (connection) {
             var sql_Statement = 'DELETE FROM bookings where bookingID =' + mysql.escape(bookingID);
             connection.query(sql_Statement, function (err, results, fields) {
